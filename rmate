@@ -58,6 +58,7 @@ function hostname_command(){
 hostname=$($(hostname_command))
 
 readonly=""
+[ -n "$SUDO_UID" ] && sudo_string=" ### "
 
 
 # default configuration
@@ -265,6 +266,8 @@ function open_file {
     fi
 
     displayname="${readonly}${displayname}"
+    [ "$sudo_string" ] && displayname="${sudo_string} ${displayname} ${sudo_string}"
+    
     echo "open" 1>&3
     echo "display-name: $displayname" 1>&3
     echo "real-path: $realpath" 1>&3
